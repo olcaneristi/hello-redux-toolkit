@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
-import { addTodo } from '../redux/todos/todosSlice';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
+import { addTodo } from "../redux/todos/todosSlice";
 
 const Form = () => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (!title) return setError(true);
     dispatch(addTodo({ id: nanoid(), title, completed: false }));
-    setTitle('');
+    setTitle("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <p>Boş değer giremezsiniz.</p>}
+
       <input
         className="new-todo"
         placeholder="What needs to be done?"
         autoFocus
         value={title}
-        onChange={e => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
       />
     </form>
   );
