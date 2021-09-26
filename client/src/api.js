@@ -13,3 +13,11 @@ export const getTodosApi = async () => {
 export const addTodosApi = async (data) => {
   return await api.post(`${BASE_URL}`, data);
 };
+
+export const toggleTodoApi = async ({ id, data }) => {
+  return await api.patch(`${BASE_URL}/${id}`, data);
+};
+
+export const removeTodoApi = async (id) => {
+  return await api.delete(`${BASE_URL}/${id}`);
+};
