@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { toggle, destroy, selectFiltered } from "../redux/todos/todosSlice";
 
 const TodoList = () => {
@@ -11,6 +12,7 @@ const TodoList = () => {
   const handleRemove = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(destroy(id));
+      toast.success("Todo başarıyla silindi! ");
     }
   };
 
