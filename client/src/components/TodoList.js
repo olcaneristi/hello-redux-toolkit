@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { selectFiltered } from "../redux/todos/todosSlice";
 import {
-  toggle,
-  destroy,
-  selectFiltered,
   getTodosAsync,
-} from "../redux/todos/todosSlice";
+  toggleTodoAsync,
+  removeTodoAsync,
+} from "../redux/todos/todoServices";
 import Error from "./Error";
 import Loading from "./Loading";
 
@@ -22,11 +22,22 @@ const TodoList = () => {
     dispatch(getTodosAsync());
   }, [dispatch]);
 
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
     if (window.confirm("Are you sure?")) {
-      dispatch(destroy(id));
+      await dispatch(removeTodoAsync(id));
       toast.success("Todo başarıyla silindi!");
     }
+  };
+
+  const handleToggle = (id, completed) => {
+    dispatch(toggleTodoAsync({ id, data: { completed } }));
+    toast.success(
+      `Todo ${
+        completed === true
+          ? "tamamlandı, tebrikler!"
+          : "geri alındı, başarılar!"
+      } .`
+    );
   };
 
   if (isLoading) {
@@ -54,7 +65,7 @@ const TodoList = () => {
               className="toggle"
               type="checkbox"
               checked={item.completed}
-              onChange={() => dispatch(toggle({ id: item.id }))}
+              onChange={() => handleToggle(item.id, !item.completed)}
             />
             <label>{item.title}</label>
             <button

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { addTodoAsync } from "../redux/todos/todosSlice";
+import { addTodoAsync } from "../redux/todos/todoServices";
 import Spinner from "./Spinner";
 
 const Form = () => {
   const [title, setTitle] = useState("");
-  const isLoading = useSelector((state) => state.todos.addNewTodoLoading);
-  const error = useSelector((state) => state.todos.addNewTodoError);
+  const isLoading = useSelector((state) => state.todos.addNewTodo.isLoading);
+  const error = useSelector((state) => state.todos.addNewTodo.error);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
