@@ -50,14 +50,6 @@ const TodoList = () => {
 
   return (
     <ul className="todo-list">
-      {/* <li className="completed">
-        <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>Learn JavaScript</label>
-          <button className="destroy"></button>
-        </div>
-      </li>*/}
-
       {filteredTodos.map((item) => (
         <li key={item.id} className={item.completed ? "completed" : ""}>
           <div className="view">
