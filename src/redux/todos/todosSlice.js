@@ -27,30 +27,35 @@ export const todosSlice = createSlice({
 
   extraReducers: {
     // get todos
-    [getTodosAsync.pending]: (state, action) => {
+    [getTodosAsync.pending]: (state) => {
       state.isLoading = true;
+      // console.log("Todolar yükleniyor...");
     },
     [getTodosAsync.fulfilled]: (state, action) => {
       state.items = action.payload;
       state.isLoading = false;
+      // console.log("Todolar başarıyla yüklendi!", action.payload);
     },
     [getTodosAsync.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
+      // console.log("Yükleme sırasında hata!", state.error);
     },
 
     // add todos
-    [addTodoAsync.pending]: (state, action) => {
+    [addTodoAsync.pending]: (state) => {
       state.addNewTodo.isLoading = true;
     },
     [addTodoAsync.fulfilled]: (state, action) => {
       state.items.push(action.payload);
       state.addNewTodo.isLoading = false;
+      // console.log("Yeni todo başarıyla eklendi!", action.payload);
     },
 
     [addTodoAsync.rejected]: (state, action) => {
       state.addNewTodo.isLoading = false;
       state.addNewTodo.error = action.error.message;
+      // console.log("Todo eklenemedi!", state.addNewTodo.error);
     },
 
     // toggle todos
@@ -58,6 +63,7 @@ export const todosSlice = createSlice({
       const { id, completed } = action.payload;
       const index = state.items.findIndex((item) => item.id === id);
       state.items[index].completed = completed;
+      // console.log("Todo başarıyla değiştirildi!", action.payload);
     },
 
     //remove todos
@@ -65,6 +71,7 @@ export const todosSlice = createSlice({
       const id = action.payload;
       const filtered = state.items.filter((item) => item.id !== id);
       state.items = filtered;
+      // console.log("Todo silindi!");
 
       /* bir diğer yöntem
       const id = action.payload;
